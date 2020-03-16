@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Complete Bootstrap 4 Website Layout</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+	<link href="style.css" rel="stylesheet">
+</head>
+<body style="color: #FFFF; font-size: 20px;">
+
+<style>
+        body{
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(static/img/background.jpg);
+            background-position: center;
+            background-size: cover;
+        }
+</style>
+{% extends "base.html" %}
+
+{% block title %}
+    Subject Create
+{% endblock %}
+
+{% block content %}
+<div class="createSubject">
+         <form action="/add_subject" method="post"  enctype='multipart/form-data'><br/>
+            Title:&nbsp&nbsp<input style="border-radius: 4px; border: 2px solid #107afd;  width: 300px; height: 35px;" type="text" name="title" required><br/><br>
+            Description:&nbsp&nbsp<input style="border-radius: 4px; border: 2px solid #107afd;  width: 300px; height: 35px;" type="text" name="description" required><br/><br>
+           <input style="text-decoration: none !important;
+        border-radius: 8px;
+  padding: 7px 20px;
+  margin-left: 20px;
+  background-color: #107afd;
+  border: 1px solid #107afd;
+  color: white;
+  background: #107afd !important;
+  font-weight: 600;" type="submit">
+       </form>
+ </div>
+{% endblock %}
+
+</body>

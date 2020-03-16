@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #1c477f;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+</style>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Complete Bootstrap 4 Website Layout</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+	<link href="style.css" rel="stylesheet">
+
+    {% block head %}
+    {# <link rel="stylesheet" href="style.css"/> #}
+    <title>{% block title %}{% endblock %} - My Webpage</title>
+    {% endblock %}
+    <style>
+        {% block style %}{% endblock %}
+        body{
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(static/img/background.jpg);
+            background-position: center;
+            background-size: cover;
+        }
+        #navigator {
+            color: #ffff;
+            padding:2px;
+            font-size: 20px;
+        }
+        #navigator a{
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <div id="navigator">
+        <ul>
+            <li> <a href="/">Home</a></li>
+            <li><a href="/post">Post</a></li>
+            <li><a href="/create_subject_page">Create Subject</a></li>
+            <li><a href="/manage">Manage</a></li>
+        </ul>
+    </div>
+
+</nav>
+<div id="content">{% block content %}{% endblock %}</div>
+
+
+{# <div id="footer">
+{#    {% block  footer %}
+{#    <script>This is javascript code </script>
+{#    {% endblock %}
+{#</div> #}
+</body>
+</html>

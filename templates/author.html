@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Complete Bootstrap 4 Website Layout</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+	<link href="style.css" rel="stylesheet">
+</head>
+{% extends "base.html" %}
+
+{% block title %}
+    {{ user.email }}-Author
+{% endblock %}
+
+{% block content %}
+    <h1>ARTICLES</h1>
+    {% for article in articles %}
+         <h2><a href="/article/{{ article.id }}"> {{ loop.index }}.{{ article.title }}(popularity score:{{ article.score }})</a></h2>
+            <p>Abstract:{{ article.abstract }}</p>
+            <p>Highlight Part:{{ article.highlight_part }}</p>
+            <p>Post Time:{{ article.postTime }}</p>
+            <p>Access:{{ article.accessNum }} Upvpte:{{ article.upvoteNum }} Downvote:{{ article.downvoteNum }}</p>
+        {% endfor %}
+    <h1>COMMENTS</h1>
+    {% for comment in comments %}
+       <p>Date:{{ comment.postTime }}</p>
+        <p>Content:{{ comment.content }}</p>
+        <a href="/article/{{ comment.article_id }}">go to article</a>
+      <a style="text-decoration: none !important;
+        border-radius: 8px;
+  padding: 7px 20px;
+  margin-left: 20px;
+  background-color: #107afd;
+  border: 1px solid #107afd;
+  color: white;
+  background: #107afd !important;
+  font-weight: 600;" href="cupvote/{{ comment.id }}">up:{{ comment.upvoteNum }}</a>
+        <a style="text-decoration: none !important;
+        border-radius: 8px;
+  padding: 7px 20px;
+  margin-left: 20px;
+  background-color: #107afd;
+  border: 1px solid #107afd;
+  color: white;
+  background: #107afd !important;
+  font-weight: 600;" href="cdownvote/{{ comment.id }}">down:{{ comment.downvoteNum }}</a>
+
+    {% endfor %}
+{% endblock %}

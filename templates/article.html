@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Complete Bootstrap 4 Website Layout</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+	<link href="style.css" rel="stylesheet">
+</head>
+<body style="color: #ffff; font-size: 16px;">
+{% extends "base.html" %}
+
+{% block title %}
+    {{ article.title }}-Article
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="articlePage">
+
+        Title:{{ article.title }}<br>
+    <br>
+        PostTime:{{ article.postTime }}<br>
+    <br>
+        Email:{{ user.email[0]+"***"+user.email[user.email.index('@'):] }}<br/>
+    <br>
+        Abstract:{{ article.abstract }}<br/>
+    <br>
+        Highlight Part:{{ article.highlight_part }}<br/>
+    <br>
+
+Download Link:<a style="
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  background-color: #107afd;
+  color: white;"  href="../{{ article.dl_link }}">download</a>
+
+<a style="
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  background-color: #107afd;
+  color: white;" href="../upvote/{{ article.id }}">up:{{ article.upvoteNum }}</a>
+
+<a style="
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  background-color: #107afd;
+  color: white;" href="../downvote/{{ article.id }}">down:{{ article.downvoteNum }}</a>
+ </div>
+
+<div class="post comment" >
+    <br>
+    <form action="/{{ article.id }}/comment" method="post"  id="form">
+
+Email:<input placeholder="Enter Your Email" style="border-radius: 4px;
+  border: 2px solid #107afd;
+  width: 250px;
+  height: 25px;" type="email" name="email" required><br/>
+
+Content:<br/> <textarea placeholder="Add Comment" style="border-radius: 4px;
+  border: 2px solid #107afd;
+  width: 250px;
+  height: 105px;" name="content" id="" cols="30" rows="10"></textarea><br/>
+    </form>
+
+    <input style="border-radius: 4px;
+  border: 2px solid #107afd;
+  width: 250px;
+  height: 25px;" type="text" id="code" disabled>
+
+    <input placeholder="Captcha" style="border-radius: 4px;
+  border: 2px solid #107afd;
+  width: 250px;
+  height: 25px;" type="text" id="input">
+
+
+<button style="text-decoration: none !important;
+        border-radius: 8px;
+  padding: 7px 20px;
+  margin-left: 20px;
+  background-color: #107afd;
+  border: 1px solid #107afd;
+  color: white;
+  background: #107afd !important;
+  font-weight: 600;" onclick="validate()">submit</button>
+</div>
+
+
+ <div class="comment" >
+
+ <h1>COMMENTS</h1>
+    {% for comment in comments %}
+        <p>{{ loop.index }}. Email:{{ comment.email }}</p>
+        <p>PostTime:{{ comment.postTime }}</p>
+        <p> Content:{{ comment.content }}</p>
+        <a style="
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  background-color: #107afd;
+  color: white;"  href="../cupvote/{{ comment.id }}">up:{{ comment.upvoteNum }}</a>
+        <a style="
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  background-color: #107afd;
+  color: white;"  href="../cdownvote/{{ comment.id }}">down:{{ comment.downvoteNum }}</a>
+        {% if flag==1 %}
+            <form action="../cdelete/{{ comment.id }}" method="post">
+                Password:<input style="border-radius: 4px;
+  border: 2px solid #107afd;
+  width: 250px;
+  height: 25px;" type="password" name="psw">
+
+                <input type="submit" value="delete">
+            </form>
+        {% endif %}
+    {% endfor %}
+
+ </div>
+
+    <script>
+    var code; // 在全局定义验证码
+
+// 生成验证码
+window.onload = function createCode() {
+	code = "";
+	var codeLength = 4;// 验证码的长度
+	var checkCode = document.getElementById("code");
+	var random = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D',
+			'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
+			'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');// 随机数
+	for (var i = 0; i < codeLength; i++) {// 循环操作
+		var index = Math.floor(Math.random() * 36);// 取得随机数的索引（0~35）
+		code += random[index];// 根据索引取得随机数加到code上
+	}
+	checkCode.value = code;// 把code值赋给验证码
+}
+var form = document.getElementById('form');
+
+// 校验验证码
+function validate() {
+	var inputCode = document.getElementById("input").value.toUpperCase(); // 取得输入的验证码并转化为大写
+	if (inputCode.length <= 0) { // 若输入的验证码长度为0
+		alert("Please input captcha"); // 则弹出请输入验证码
+		return;
+	} else if (inputCode != code) { // 若输入的验证码与产生的验证码不一致时
+		alert("Wrong captcha"); // 则弹出验证码输入错误
+		createCode();// 刷新验证码
+		document.getElementById("input").value = "";// 清空文本框
+		return;
+	} else {
+             form.submit();
+	}
+}
+
+    </script>
+</body>
+{% endblock %}
+
